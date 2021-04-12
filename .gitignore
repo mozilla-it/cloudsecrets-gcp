@@ -1,0 +1,17 @@
+# Python Build
+__pycache__
+*.egg-info
+*.pyc
+.eggs
+build
+venv
+.tox
+
+# Unit Tests
+test-secrets.json
+
+# Visual Studio Code
+.vscode
+
+# PyCharm
+.idea
