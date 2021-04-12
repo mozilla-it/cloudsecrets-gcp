@@ -25,4 +25,4 @@ jobs:
       script:
         - python setup.py install
         - which cloud-secrets
-        - python -c 'from cloudsecrets.gcp import Secrets'
+        - python -c 'from cloudsecrets_gcp.gcp import Secrets'
