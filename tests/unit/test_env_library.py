@@ -2,7 +2,7 @@ import unittest
 import unittest.mock as mock
 import os
 
-from cloudsecrets.env import Secrets
+from cloudsecrets_gcp.env import Secrets
 
 
 class TestEnvLibrary(unittest.TestCase):

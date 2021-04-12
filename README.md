@@ -53,7 +53,7 @@ pip3 install --upgrade --no-cache-dir .
 For GCP the library assumes you're fully authenticated and authorized for secrets management. For GCP, you will need to let the library know what project you want to use. This can be done with the PROJECT env var or by passing the `project` argument to the class.
 
 ```
->>> from cloudsecrets.gcp import Secrets
+>>> from cloudsecrets_gcp.gcp import Secrets
 >>> mySecrets = Secrets("afrank-secrets")
 >>> dict(mySecrets)
 {'THIS': 'is a secret', 'ANOTHER': 'SECRET2'}

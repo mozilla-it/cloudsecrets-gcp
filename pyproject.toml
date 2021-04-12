@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "cloudsecrets"
+name = "cloudsecrets-gcp"
 version = "0.2.0"
 description = "Python tool for accessing mozilla cloud secrets"
 authors = ["Adam Frank <afrank@mozilla.com>"]

@@ -3,7 +3,7 @@ import unittest.mock as mock
 import os
 
 from google.cloud import secretmanager
-from cloudsecrets.file import Secrets
+from cloudsecrets_gcp.file import Secrets
 
 
 class FakeSecret:
