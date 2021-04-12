@@ -1,4 +1,4 @@
-from cloudsecrets import SecretsBase
+from cloudsecrets_gcp import SecretsBase
 import os
 import json
 

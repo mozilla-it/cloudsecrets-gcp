@@ -4,7 +4,7 @@ import json
 import os
 import logging
 
-from cloudsecrets import SecretsBase
+from cloudsecrets_gcp import SecretsBase
 
 from google.api_core import exceptions
 
@@ -22,8 +22,8 @@ class Secrets(SecretsBase):
 
     Value (json string):
     {
-      "MYSECRET": "VkFMVUU=",
-      "creds.json": "ewogICAgImJsb2IiOiAiaGVyZSBpcyBzb21lIHN0dWZmIgp9Cg=="
+      "MYSECRET": "VkFMVUU=", # pragma: allowlist secret
+      "creds.json": "ewogICAgImJsb2IiOiAiaGVyZSBpcyBzb21lIHN0dWZmIgp9Cg==" # pragma: allowlist secret
     }
 
     Project must be specified, either as a keyword argument or env var.
@@ -72,7 +72,9 @@ class Secrets(SecretsBase):
         """
         logging.debug(f"GCP _secret_exists")
         try:
-            self.client.get_secret(request={'name': self.client.secret_path(self.project, self.secret)})
+            self.client.get_secret(
+                request={"name": self.client.secret_path(self.project, self.secret)}
+            )
             return True
         except exceptions.NotFound:
             return False
@@ -81,8 +83,8 @@ class Secrets(SecretsBase):
 
     def _list_versions(self) -> list:
         logging.debug(f"GCP _list_versions")
-        #parent = self.client.secret_path(self._project, self.secret)
-        parent = f'projects/{self._project}/secrets/{self.secret}'
+        # parent = self.client.secret_path(self._project, self.secret)
+        parent = f"projects/{self._project}/secrets/{self.secret}"
         ret = []
         for x in self.client.list_secret_versions(parent):
             ret += [int(x.name.split("/")[-1])]
@@ -98,7 +100,7 @@ class Secrets(SecretsBase):
         if self.create_if_not_present and not self._secret_exists:
             self._create_secret_resource()
         try:
-            x = self.client.access_secret_version(request={'name': secret_path})
+            x = self.client.access_secret_version(request={"name": secret_path})
         except:
             self._encoded_secrets = {}
             self._secrets = {}
@@ -118,9 +120,9 @@ class Secrets(SecretsBase):
         try:
             self.client.create_secret(
                 request={
-                    "parent":    f'projects/{self.project}',
+                    "parent": f"projects/{self.project}",
                     "secret_id": self.secret,
-                    "secret":    {"replication": {"automatic": {}}},
+                    "secret": {"replication": {"automatic": {}}},
                 }
             )
         except Exception as e:
@@ -135,8 +137,8 @@ class Secrets(SecretsBase):
         j_blob = json.dumps(self._encoded_secrets).encode("UTF-8")
         resp = self.client.add_secret_version(
             request={
-                "parent":  f'projects/{self.project}/secrets/{self.secret}',
-                "payload": {"data": j_blob}
+                "parent": f"projects/{self.project}/secrets/{self.secret}",
+                "payload": {"data": j_blob},
             }
         )
         self._version = resp.name.split("/")[-1]
